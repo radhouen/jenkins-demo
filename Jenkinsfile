@@ -20,11 +20,11 @@ node {
         checkout scm
     }
 
-     stage('Check NPM version') {
+    /* stage('Check NPM version') {
         withEnv(["NPM_CONFIG_LOGLEVEL=warn"]) {
             sh 'npm config ls'
         }
-    }
+    }*/
 
     stage('NPM Install') {
         withEnv(["NPM_CONFIG_LOGLEVEL=warn"]) {
