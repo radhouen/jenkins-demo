@@ -15,29 +15,15 @@ properties(
     ]
 )
 node {
-    
-    env.NODEJS_HOME = "${tool 'NodeJS 10.15.0'}"
-    // on linux / mac
-    env.PATH="${env.NODEJS_HOME}/bin:${env.PATH}"
-    // on windows
-    env.PATH="${env.NODEJS_HOME};${env.PATH}"
-    sh 'npm --version'
-
     stage('Checkout') {
-        //disable to recycle workspace data to save time/bandwidth
         deleteDir()
         checkout scm
-
-        //enable for commit id in build number
-        //env.git_commit_id = sh returnStdout: true, script: 'git rev-parse HEAD'
-        //env.git_commit_id_short = env.git_commit_id.take(7)
-        //currentBuild.displayName = "#${currentBuild.number}-${env.git_commit_id_short}"
     }
 
      stage('Check NPM version') {
-        steps {
-        sh 'npm config ls'
-      }
+        withEnv(["NPM_CONFIG_LOGLEVEL=warn"]) {
+            sh 'npm config ls'
+        }
     }
 
     stage('NPM Install') {
@@ -46,8 +32,7 @@ node {
         }
     }
 
-
-    stage('Build') {
+   stage('Build') {
         milestone()
         sh 'npm run prod'
     }
