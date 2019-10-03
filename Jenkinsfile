@@ -2,6 +2,7 @@
 environment {
      VERSION = "0.1"
    }
+tools {nodejs "node"}
 properties(
     [
         [$class: 'BuildDiscarderProperty', strategy:
@@ -20,11 +21,11 @@ node {
         checkout scm
     }
 
-    /* stage('Check NPM version') {
+     stage('Check NPM version') {
         withEnv(["NPM_CONFIG_LOGLEVEL=warn"]) {
             sh 'npm config ls'
         }
-    }*/
+    }
 
     stage('NPM Install') {
         withEnv(["NPM_CONFIG_LOGLEVEL=warn"]) {
