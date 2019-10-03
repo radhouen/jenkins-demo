@@ -2,7 +2,6 @@
 environment {
      VERSION = "0.1"
    }
-tools {nodejs "node"}
 properties(
     [
         [$class: 'BuildDiscarderProperty', strategy:
@@ -16,6 +15,14 @@ properties(
     ]
 )
 node {
+    
+    env.NODEJS_HOME = "${tool 'NodeJS 10.15.0'}"
+    // on linux / mac
+    env.PATH="${env.NODEJS_HOME}/bin:${env.PATH}"
+    // on windows
+    env.PATH="${env.NODEJS_HOME};${env.PATH}"
+    sh 'npm --version'
+
     stage('Checkout') {
         //disable to recycle workspace data to save time/bandwidth
         deleteDir()
